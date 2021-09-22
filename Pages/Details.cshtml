@@ -1,0 +1,224 @@
+﻿@page
+@model Fibers_Density_Estimater.Pages.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3 style="text-align:center; font-style:italic">Details of @ViewData["OrgImg_WithoutExtension"].ToString()</h3>
+<hr />
+<div class="row">
+    <div class="col-12 my-auto">
+        <form method="post" asp-page-handler="ChangeImage">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ChangeImage" style="font-size:large">Toggle between image before and after preprocessing</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+
+@{
+    if (ViewData["ImageSource"].ToString() == "Original")
+    {
+        <h4 style="text-align:center">Original Image</h4>
+        <div class="row">
+            <div class="col-12 my-auto">
+                <a download="@ViewData["OrgImg_WithoutExtension"].ToString()_Modified.jpg" href="@Url.Content("~/Preprocessed/" + ViewData["OrgImg"].ToString())" title="@ViewData["OrgImg"].ToString()">
+                    <img src="@Url.Content("~/Preprocessed/" + ViewData["OrgImg"].ToString())" class="img-responsive" style="width:100%" />
+                </a>
+            </div>
+        </div>
+    }
+    else if (ViewData["ImageSource"].ToString() == "Processed")
+    {
+        <h4 style="text-align:center">Preprocessed Image</h4>
+        <div class="row">
+            <div class="col-12 my-auto">
+                <a download="@ViewData["OrgImg_WithoutExtension"].ToString()_Enhanced.jpg" href="@Url.Content("~/Enhanced/" + ViewData["OrgImg"].ToString())" title="@ViewData["OrgImg"].ToString()">
+                    <img src="@Url.Content("~/Enhanced/" + ViewData["OrgImg"].ToString())" class="img-responsive" style="width:100%" />
+                </a>
+            </div>
+        </div>
+    }
+}
+@*<h4 style="text-align:center">Original Image</h4>
+<div class="row">
+    <div class="col-12 my-auto">
+        <a download="@ViewData["OrgImg_WithoutExtension"].ToString()_Modified.jpg" href="@Url.Content("~/Preprocessed/" + ViewData["OrgImg"].ToString())" title="@ViewData["OrgImg"].ToString()">
+            <img src="@Url.Content("~/Preprocessed/" + ViewData["OrgImg"].ToString())" class="img-responsive" style="width:100%" />
+        </a>
+    </div>
+</div>
+
+<hr />
+<h4 style="text-align:center">Preprocessed Image</h4>
+<div class="row">
+    <div class="col-12 my-auto">
+        <a download="@ViewData["OrgImg_WithoutExtension"].ToString()_Enhanced.jpg" href="@Url.Content("~/Enhanced/" + ViewData["OrgImg"].ToString())" title="@ViewData["OrgImg"].ToString()">
+            <img src="@Url.Content("~/Enhanced/" + ViewData["OrgImg"].ToString())" class="img-responsive" style="width:100%" />
+        </a>
+    </div>
+</div>*@
+
+<hr />
+<h4 style="text-align:center">Illustrative Histogram</h4>
+<div class="row">
+    <div class="col-12 my-auto">
+        <a download="@ViewData["OrgImg_WithoutExtension"].ToString()_Histogram.jpg" href="@Url.Content("~/Histogram/" + ViewData["OrgImg"].ToString())" title="@ViewData["OrgImg"].ToString()">
+            <img src="@Url.Content("~/Histogram/" + ViewData["OrgImg"].ToString())" class="img-responsive" style="width:100%" />
+        </a>
+    </div>
+</div>
+
+<hr />
+<h4 style="text-align:center">Detection Pattern</h4>
+<div class="row">
+    <div class="col-12 my-auto">
+        <a download="@ViewData["OrgImg_WithoutExtension"].ToString()_Pattern.jpg" href="@Url.Content("~/Pattern/" + ViewData["OrgImg"].ToString())" title="@ViewData["OrgImg"].ToString()">
+            <img src="@Url.Content("~/Pattern/" + ViewData["OrgImg"].ToString())" class="img-responsive" style="width:100%" />
+        </a>
+    </div>
+</div>
+<hr />
+
+<h3 style="text-align:center; font-style:italic">Rotate Images and Inspect the Effect</h3>
+<div class="row">
+    <div class="col-3 my-auto">
+        <form method="post" asp-page-handler="Rotate">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="Rotate" style="font-size:large">Correct Rotation</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3 my-auto">
+        <form method="post" asp-page-handler="ResetRotation">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ResetRotation" style="font-size:large">Reset Rotation</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3 my-auto">
+        <form method="post" asp-page-handler="ApplyRotation">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ApplyRotation" style="font-size:large">Apply Correction</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3 my-auto">
+        <form method="post" asp-page-handler="ApplyRotationToAll">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ApplyRotationToAll" style="font-size:large">Apply Correction to All Images</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<h3 style="text-align:center; font-style:italic">Change Detection Parameters and Inspect the Effect</h3>
+<div class="row">
+    <div class="col-4 my-auto">
+        <form method="post" asp-page-handler="ChangeParameters">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ChangeParameters" style="font-size:large">Change Parameters</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4 my-auto">
+        <form method="post" asp-page-handler="ResetParameters">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ResetParameters" style="font-size:large">Reset Parameters</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4 my-auto">
+        <form method="post" asp-page-handler="ApplyChangesToAll">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="ApplyChangesToAll" style="font-size:large">Apply Changes to All Images</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+<hr />
+
+<div class="row">
+    <div class="col-6 my-auto">
+        <h1 style="text-align:center"><a asp-page="/Results"> <button class="btn btn-primary">Return and Ignore Changes</button> </a> </h1>
+    </div>
+    <div class="col-6 my-auto">
+        <form method="post" asp-page-handler="DownloadAllImages">
+            <div class="form-group">
+                <div style="text-align:center">
+                    <button class="btn btn-primary" asp-page-handler="DownloadAllImages" style="font-size:large">Concatenate and Download Images</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+<div style="border-style:solid; border-color:blue; border-width:medium; border-radius:10px; padding:3px">
+    <h3 style="text-align:center">Guidelines:</h3>
+    <ol>
+        <li>
+            The most essential details of the detection process are illustrated in this page.
+        </li>
+        <li>
+            You can simply click on any image in order to download it.
+        </li>
+        <li>
+            You can toggle between the image before and after preprocessing by simply clicking the corresponding button
+            above the image.
+        </li>
+        <li>
+            When you click "Correct Rotation", an interactive window will appear in order to let you modify the image
+            rotation within 10 degrees in both directions.
+        </li>
+        <li>
+            When you click "Reset Rotation", the last rotation modification will be ignored, and all displayed images
+            will be regenerated.
+        </li>
+        <li>
+            When you click "Apply Correction", the corrected rotation will be applied only to the selected image, and
+            the results will be recalculated.
+        </li>
+        <li>
+            When you click "Apply Correction to All Images", the corrected rotation will be applied to all images, and
+            the results will be recalculated.
+        </li>
+        <li>
+            When you click "Change Parameters", you will be redirected to the parameter change page.
+        </li>
+        <li>
+            When you click "Reset Parameters", the parameters will be reseted to its default values.
+        </li>
+        <li>
+            When you click "Apply Changes to All Images", all results will be recalculated using the newly set parameters.
+        </li>
+        <li>
+            When you click "Concatenate and Download Images", a set of different image combinations will be generated and downloaded
+            so that they can be used directly in your documentation/report/paper. Examples are: Image_Histogram, Enhanced_Pattern, ..etc.
+        </li>
+        <li>
+            You can return back anytime to the results page and ignore any changes.
+        </li>
+    </ol>
+</div>

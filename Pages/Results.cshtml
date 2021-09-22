@@ -1,0 +1,156 @@
+﻿@page
+@model Fibers_Density_Estimater.Pages.ResultsModel
+@inject Fibers_Density_Estimater.Headers.Uploaded_Images PFD
+@{
+    ViewData["Title"] = "Results";
+}
+
+<h3 style="text-align:center; font-style:italic">@ViewData["Title"]</h3>
+<hr />
+@{
+    if (PFD.Images == null || PFD.Images.Count() < 1)
+    {
+        <h3> No results to show, please start a new test.</h3>
+        <h3 style="text-align:center"><a asp-page="/Index">Start a new test</a> </h3>
+    }
+    else
+    {
+        <div class="row">
+            <table border="1" class="table">
+                <thead>
+                    <tr style="vertical-align: central">
+                        <th style='text-align:center;vertical-align:middle'>
+                            Image ID
+                        </th>
+                        <th style='text-align:center;vertical-align:middle'>
+                            Provided Number of Lines
+                        </th>
+                        <th style='text-align:center;vertical-align:middle'>
+                            Estimated Number of Lines
+                        </th>
+                        <th style='text-align:center;vertical-align:middle'>
+                            Estimated Density (Ln/cm)
+                        </th>
+                        <th style='text-align:center;vertical-align:middle'>
+                            Min Spacing in mm
+                        </th>
+                        <th style='text-align:center;vertical-align:middle'>
+                            Max Spacing in mm
+                        </th>
+                        <th style='text-align:center;vertical-align:middle'>
+                            Accuracy
+                        </th>
+                    </tr>
+                </thead>
+
+                @foreach (var img in PFD.Images)
+                {
+                    <tr>
+                        <td style='text-align:center;vertical-align:middle'>
+                            @img.ID
+                        </td>
+                        @if (img.GT)
+                        {
+                            <td style='text-align:center;vertical-align:middle'>
+                                @Math.Round(img.NumberOfFibres_GT, 2)
+                            </td>
+                        }
+                        else
+                        {
+                            <td style='text-align:center;vertical-align:middle'>
+                                GT Not Provided
+                            </td>
+                        }
+                        <td style='text-align:center;vertical-align:middle'>
+                            @Math.Round(img.NumberOfFibres_Calculated, 2)
+                        </td>
+                        <td style='text-align:center;vertical-align:middle'>
+                            @Math.Round(img.Density, 2)
+                        </td>
+                        <td style='text-align:center;vertical-align:middle'>
+                            @Math.Round(img.Min_Spacing, 2)
+                        </td>
+                        <td style='text-align:center;vertical-align:middle'>
+                            @Math.Round(img.Max_Spacing, 2)
+                        </td>
+                        @if (img.GT)
+                        {
+                            <td style='text-align:center;vertical-align:middle'>
+                                @Math.Round(img.Evaluation, 2)
+                            </td>
+                        }
+                        else
+                        {
+                            <td style='text-align:center;vertical-align:middle'>
+                                GT Not Provided
+                            </td>
+                        }
+                        <td style='text-align:center;vertical-align:middle'>
+                            <form method="post" asp-page="Details" asp-page-handler="ShowDetails">
+                                <button class="btn btn-primary" asp-page="Details" asp-page-handler="ShowDetails">Details</button>
+                                <input type="hidden" name="FN" value="@img.ID" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        if (PFD.Total_Evaluation != 0)
+        {
+            <div style="text-align:center">
+                <h6>Average accuracy: @Math.Round(PFD.Total_Evaluation, 2)</h6>
+            </div>
+        }
+    }
+
+    <div class="row">
+        <div class="col-6 my-auto">
+            <form method="post" asp-page-handler="DownloadResults">
+                <div class="text-center">
+                    <button class="btn btn-primary" asp-page-handler="DownloadResults" id="DownloadResults" style="font-size:large">Download Results (Separated by Comma)</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-6 my-auto">
+            <form method="post" asp-page-handler="DownloadResultsDe">
+                <div class="text-center">
+                    <button class="btn btn-primary" asp-page-handler="DownloadResultsDe" id="DownloadResultsDe" style="font-size:large">Download Results (Separated by Semicolon)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<hr />
+<div class="row">
+    <div class="col-12">
+        <h1 style="text-align:center"><a asp-page="/Index"> <button class="btn btn-primary">Start New Analysis</button> </a> </h1>
+    </div>
+</div>
+
+<hr />
+<div style="border-style:solid; border-color:blue; border-width:medium; border-radius:10px; padding:3px">
+    <h3 style="text-align:center">Guidelines:</h3>
+    <ol>
+        <li>
+            A table of all generated results should appear in this page, containing both ground-truth (if provided) and calculated information.
+        </li>
+        <li>
+            The columns of "Provided Number of Fibres" and "Accuracy" will be filled with "GT Not Provided" if
+            the ground-truth information was not included properly in the file name.
+        </li>
+        <li>
+            Click on "Download Results" button in order to download the results table as a ".csv" file. There are two possible options for results format,
+            Standard (Comma separator) and German (Semicolon separator).
+        </li>
+        <li>
+            Click on "Details" button in order to display a simplified illustration of the detection process for the
+            corresponding image. Furthermore, you can Correct the image rotation and modify the detection parameters
+            from the "Details".
+        </li>
+        <li>
+            Click on "Start New analysis" button in order to delete everything and start a new test.
+        </li>
+    </ol>
+</div>

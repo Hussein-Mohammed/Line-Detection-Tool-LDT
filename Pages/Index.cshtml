@@ -1,0 +1,148 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Upload Images to Detect Lines";
+}
+
+<h3 style="text-align:center; font-style:italic">@ViewData["Title"]</h3>
+<hr />
+
+<h3 style="text-align:center">Select Images</h3>
+<br />
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form method="post" asp-page-handler="Upload" enctype="multipart/form-data">
+            <div>
+                <input type="file" name="files" multiple />
+            </div>
+            <br />
+            <div>
+                <button type="submit" style="font-style:normal;font-size:25px"> Upload and Validate</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+
+@if (ViewData["Message"] != null)
+{
+    if (Convert.ToString(ViewData["Colour"]) == "Red")
+    {
+        <div class="alert alert-danger" style="margin-top:20px">
+            @ViewData["Message"]
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success" style="margin-top:20px">
+            @ViewData["ValidFiles"] @ViewData["Message"]
+        </div>
+    }
+}
+
+<br />
+<hr />
+@if (Convert.ToString(ViewData["Upload"]) == "Success")
+{
+    <div class="row">
+        <div class="col-12">
+            <div style="text-align:center">
+                <form method="post" asp-page-handler="Analyse">
+                    <div class="form-group" id="RegionLength">
+                        <div>
+                            <label for="RegionLength" style="font-size:medium">Length of considered orientation in mm:</label>
+                        </div>
+                        <div>
+                            <input asp-for="Length" name="Length" type="number" min="1" max="1000" value="20">
+                        </div>
+                    </div>
+                    <div class="form-group" id="FibreOrientation">
+                        <div>
+                            <label for="FibreOrientation" style="font-size:medium">Orientation to be considered:</label>
+                        </div>
+                        <div>
+                            <input asp-for="Orientation" type="radio" id="Vertical" name="Orientation" value="true">
+                            <label for="Vertical">Vertical</label><br>
+                            <input asp-for="Orientation" type="radio" id="Horizontal" name="Orientation" value="false">
+                            <label for="Horizontal">Horizontal</label><br>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-12">
+                            <div style="text-align:center">
+                                <button class="btn btn-primary" asp-page-handler="Analyse" style="font-size:x-large">Analyse</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<br />
+<hr />
+<p style="text-align:center">
+    This software tool has been developed by <a href="http://uhh.de/hussein-adnan-mohammed"> Dr. Hussein Mohammed</a>
+    as a part of sub-project RFA05: <a href="https://www.written-artefacts.uni-hamburg.de/research/field-a/rfa05.html">
+        Pattern Recognition in 2D Data from Digitised Images and Advanced Aquisition Techniques.
+    </a>
+</p>
+<br />
+<p>
+    The main goal of this software tool is to analyse images of writing supports in order to detect lines (such as printers marks or papyri fibres)
+    and estimate their density. The main tasks achieved by this software tool are:
+    <ul>
+        <li>
+            Detecting lines in pre-selected orientation.
+        </li>
+        <li>
+            Calculating min and max spacing, and density within a pre-specified length.
+        </li>
+        <li>
+            Providing evaluation of detection accuracy for images with ground-truth information.
+        </li>
+        <li>
+            Generating visualisation of detection histogram for manual inspection.
+        </li>
+        <li>
+            Allowing for rotation correction and parameter change in order to optimise the detection results.
+        </li>
+    </ul>
+</p>
+
+<hr />
+<div style="border-style:solid; border-color:blue; border-width:medium; border-radius:10px; padding:3px">
+    <h3 style="text-align:center">Guidelines:</h3>
+    <ol>
+        <li>
+            Select images to be analysed by clicking "Select Images" button.
+        </li>
+        <li>
+            Upload and validate the images by clicking "Upload and Validate" button. You will recieve a message indecating whether the uploaded files are
+            valid for the analysis or not; also, you will be informed about the number of valid files. Accepted extensions are:
+            ".jpeg", ".jpg", ".tiff", ".tif", ".png" and ".bmp".
+        </li>
+        <li>
+            File names can be anything you like. But you can evaluate the accuracy of the detection by providing ground-truth information in the file name.
+            In order to do this, file names need to follow the following format: "GT_N_***", where N is the number of counted lines manually. For example, the
+            following file names contain valid ground-truth information: GT_15_ChinesePapers12, GT_25_PapyriFromEygpt.
+        </li>
+        <li>
+            Once the upload is successful and there is at least one valid file, you can specify the dimension of
+            the region covered by the image. Please enter the dimension of the desired orientation to be analysed in mm.
+            If you did not set this parameter correctly, the density and spacing calculations will be invalid. Nevertheless, you can correct it later after
+            generating the results.
+        </li>
+        <li>
+            Furthermore, you need to select the orientation of the fibres to be detected. If the lines orientation were wrong,
+            all the results will be invalid. Nevertheless, you can correct it later after generating the results.
+        </li>
+        <li>
+            Once you finished selecting the Length and Orientation, you can click "Analyse" to start the analysis.
+        </li>
+    </ol>
+</div>

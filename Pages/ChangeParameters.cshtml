@@ -1,0 +1,159 @@
+﻿@page
+@model Fibers_Density_Estimater.Pages.ChangeParametersModel
+@inject Fibers_Density_Estimater.Headers.Uploaded_Images PFD
+@{
+    ViewData["Title"] = "Change Detection Parameters";
+}
+
+<h3 style="text-align:center; font-style:italic">@ViewData["Title"]</h3>
+
+<hr />
+<form method="post" asp-page-handler="ChangeParameters">
+    <div class="form-group" id="SettingsTables">
+        <h4 style="text-align:center; font-style:italic">General Settings</h4>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">ٌRotate image by 90 degrees:</label>
+            </div>
+            <div class="col-6">
+                <input name="Rotate" type="checkbox" value="true" style="transform:scale(3)">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Length of considered orientation in mm:</label>
+            </div>
+            <div class="col-6">
+                <input name="Length" type="number" value="@PFD.Length_mm" max="1000" min="1" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <br />
+        <hr />
+        <h4 style="text-align:center; font-style:italic">Preprocessing Parameters</h4>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Image channel to consider (All will be considered when 0):</label>
+            </div>
+            <div class="col-6">
+                <input name="Channel" type="number" value="0" max="@ViewData["MaxChannels"].ToString()" min="0" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Apply histogram equalisation:</label>
+            </div>
+            <div class="col-6">
+                <input name="Apply_HistEqu" type="checkbox" value="true" checked style="transform:scale(3)">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Apply the CLAHE algorithm:</label>
+            </div>
+            <div class="col-6">
+                <input name="Apply_CLAHE" type="checkbox" value="true" checked style="transform:scale(3)">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Clipping Limit for CLAHE:</label>
+            </div>
+            <div class="col-6">
+                <input name="ClipLimit" type="number" value="40" max="250" min="5" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Size of tiles grid for CLAHE:</label>
+            </div>
+            <div class="col-6">
+                <input name="TilesGridSize" type="number" value="5" max="99" min="3" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <br />
+        <hr />
+        <h4 style="text-align:center; font-style:italic">Detection Parameters</h4>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Size of bluring kernel:</label>
+            </div>
+            <div class="col-6">
+                <input name="Hist_Blur_Size" type="number" value="17" max="99" min="3" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium"> Condition: Minimum_Histogram_Value < (Detected_Peak * X):</label>
+            </div>
+            <div class="col-6">
+                <input name="Min_Threshold" type="number" step="0.1" value="0.7" max="0.9" min="0.1" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Condition: Detected_Peak > (Maximum_Histogram_Value * X):</label>
+            </div>
+            <div class="col-6">
+                <input name="Max_Threshold" type="number" step="0.1" value="0.3" max="0.9" min="0.1" style="width: 90%">
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <label style="font-size:medium">Percent of image border to be ignored:</label>
+            </div>
+            <div class="col-6">
+                <input name="DetectionBorder" type="number" step="0.05" value="0.3" max="45" min="0" style="width: 90%"> %
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-12">
+                <h1 style="text-align:center"><button type="submit" class="btn btn-primary"> Show Effect of Changes </button></h1>
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr />
+<div style="border-style:solid; border-color:blue; border-width:medium; border-radius:10px; padding:3px">
+    <h3 style="text-align:center">Guidelines:</h3>
+    <ol>
+        <li>
+            You can change the main parameters of the LDT application from this page. The parameters are divided into
+            three groups: General settings concerning the uploaded images, preprocessing steps which take place before the detection,
+            and the detection algorithm itself.
+        </li>
+        <li>
+            You can modify your choices that you entered in the first page (Namely, orientation and length) from the "General Settings".
+        </li>
+        <li>
+            Once you uncheck the "Apply the CLAHE algorithm", the CLAHE parameters will be automatically ignored.
+        </li>
+        <li>
+            In order to control the sensitivity of line detection, you can change the "Condition" parameters in "Detection Parameters". The names in
+            the conditions description refers to the histogram in "Details" page in order to simplify the usage of this tool. 
+        </li>
+        <li>
+            You can control the region where the detection takes place and select how much of the image border should be ignored from the "Detection
+            Parameters" as well.
+        </li>
+        <li>
+            Once you finish your modifications, click on "Show Effect of Changes" in order to be redirected back to
+            the "Details" page of the selected image.
+        </li>
+    </ol>
+</div>

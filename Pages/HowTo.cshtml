@@ -1,0 +1,42 @@
+﻿@page
+@model Fibers_Density_Estimater.Pages.HowToModel
+@{
+    ViewData["Title"] = "How To Use The Line Detection Tool v1.0 (LDT1)";
+}
+
+<h3 style="text-align:center; font-style:italic">@ViewData["Title"]</h3>
+
+<ol>
+    <li>
+        Each step (page) contains relevant instructions at the bottom of the page. Please read
+        these instructions and use them as guidelines.
+    </li>
+    <br />
+    <li>
+        Start the analysis by selecting the images you want to analyse. Click the "Select Images" button.
+    </li>
+    <br />
+    <li>
+        Upload the images and validate them by clicking the "Upoad and Validate" button.
+    </li>
+    <br />
+    <li>
+        If the application finds at least one valid file (check relevant guidelines), a form will appear and
+        you will need to select the orientation of fibres and the Length of considered orientation in mm.
+    </li>
+    <br />
+    <li>
+        Click "Analyse" button in order to start the analysis and detect lines in the specified orientation.
+    </li>
+    <br />
+    <li>
+        The application will redirect you to the "Results" page. In this page, you will find a table of results,
+        where each row is dedicated to one of the uploaded images.
+    </li>
+    <br />
+    <li>
+        you can display a simplified illustration of the detection process for any image by clicking on "Details" of the desired image.
+        Furthermore, you can Correct the image rotation and modify the detection parameters.
+    </li>
+</ol>
+

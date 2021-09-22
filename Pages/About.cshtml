@@ -1,0 +1,64 @@
+﻿@page
+@model Fibers_Density_Estimater.Pages.AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<h3 style="text-align:center; font:bold">@Model.Message</h3>
+<br />
+<p>
+    This software tool has been developed by <a href="http://uhh.de/hussein-adnan-mohammed"> Dr. Hussein Mohammed</a>
+    as a part of sub-project RFA05: <a href="https://www.written-artefacts.uni-hamburg.de/research/field-a/rfa05.html">
+        Pattern Recognition in 2D Data from Digitised Images and Advanced Aquisition Techniques
+    </a>.
+</p>
+<br />
+<p>
+    The main goal of this software tool is to analyse images of writing supports in order to detect lines (such as printers marks or papyri fibres)
+    and estimate their density. The main tasks achieved by this software tool are:
+    <ul>
+        <li>
+            Detecting lines in pre-selected orientation.
+        </li>
+        <li>
+            Calculating min and max spacing, and density within a pre-specified length.
+        </li>
+        <li>
+            Providing evaluation of detection accuracy for images with ground-truth information.
+        </li>
+        <li>
+            Generating visualisation of detection histogram for manual inspection.
+        </li>
+        <li>
+            Allowing for rotation correction and parameter change in order to optimise the detection results.
+        </li>
+    </ul>
+</p>
+<br />
+<h3 style="font:bold">Acknowledgement: </h3>
+<p>
+    The research and developement for this software was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under
+    Germany´s Excellence Strategy – EXC 2176 ‘Understanding Written Artefacts: Material, Interaction and Transmission in Manuscript Cultures’,
+    project no. 390893796. The research was conducted within the scope of the Centre for the Study of Manuscript Cultures (CSMC) at Universität Hamburg.
+</p>
+<p>
+    The analysis in this application has been developed in close collaboration with
+    <a href="https://www.written-artefacts.uni-hamburg.de/people/helmanwazny.html"> Dr. Agnieszka Helman-Wazny </a> (CSMC),
+    <a href="https://altegeschichte.philhist.unibas.ch/de/personen/isabelle-marthot-santaniello/"> Dr. Isabelle Marthot-Santaniello </a> (Universität Basel),
+    <a href="https://www.researchgate.net/profile/Grzegorz_Nehring"> M.A. Grzegorz Nehring</a> (Bundesanstalt für Materialforschung und -prüfung),
+    <a href="https://www.written-artefacts.uni-hamburg.de/people/shevchuk.html"> Mr. Ivan Shevchuk </a> (CSMC).
+    Furthermore, I would like to thank them for testing this software tool and validating the results.
+</p>
+<br />
+<h3 style="position:center; font:bold">Copyrights notice:</h3>
+<div class="row">
+    <div class="col-mid-8">
+        <p>
+            This software tool is licensed under the <a href="https://opensource.org/licenses/AGPL-3.0">GNU Affero General Public License version 3</a>
+        </p>
+    </div>
+    <div class="col-mid-4">
+        <img src="~/images/agplv3.png" class="img-responsive" />
+    </div>
+</div>
+

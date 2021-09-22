@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>6353b12a-8ab9-4193-8712-175a0b81da87</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ImageCombination\" />
+    <Folder Include="Headers\Preprocessed\" />
+    <Folder Include="wwwroot\Fibres\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.3.0.20200421" />
+  </ItemGroup>
+
+</Project>
