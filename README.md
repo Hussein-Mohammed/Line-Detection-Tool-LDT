@@ -1,6 +1,6 @@
 # Line Detection Tool (LDT)
 
-The main goal of this software tool is to detect, count and mark the text lines in images of handwritten manuscripts. This version contains features to detect vertical text-lines and bright text-lines on darker background.
+The main goal of the LDT is to analyse images of writing supports in order to detect lines (such as sieve imprints or papyri fibres) and estimate their density. These detected lines form a pattern, which can be used as a distinctive feature of the writing support.
 
 ![LDT](https://github.com/Hussein-Mohammed/Line-Detection-Tool-LDT/blob/master/ldat1.png)
 
