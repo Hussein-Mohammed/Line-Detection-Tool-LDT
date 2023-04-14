@@ -2,7 +2,7 @@
 
 The main goal of this software tool is to detect, count and mark the text lines in images of handwritten manuscripts. This version contains features to detect vertical text-lines and bright text-lines on darker background.
 
-![LDT](https://github.com/Hussein-Mohammed/Line-Detection-Tool-LDT/blob/master/ldt1.png)
+![LDT](https://github.com/Hussein-Mohammed/Line-Detection-Tool-LDT/blob/master/ldat1.png)
 
 The main tasks achieved by this software tool are:
 
